@@ -13,18 +13,19 @@ AS
 BEGIN
 	INSERT INTO LogUsuario 
 	(
-		UsuarioId, StatusUsuarioId, CargoUsuarioId, EnderecoUsuarioId, NomeUsuario, Email, Senha, CPF, DataNascimento, 
-		AlteracaoId
+		UsuarioId, StatusUsuarioId, CargoId, NomeUsuario, Email, Senha, CPF, DataNascimento, 
+		TipoAlteracaoId
 	) 
 	SELECT
 		i.UsuarioId,
 		i.StatusUsuarioId,
-		i.CargoUsuarioId,
-		i.EnderecoUsuarioId,
+		i.CargoId,
 		i.Nome,
 		i.Email,
+		i.Senha,
 		i.CPF,
-		i.DataNascimento
+		i.DataNascimento,
+		t.TipoAlteracaoId
 	FROM inserted i
 	CROSS JOIN
 		TipoALteracaoUsuario t
@@ -42,18 +43,19 @@ AS
 BEGIN
 	INSERT INTO LogUsuario 
 	(
-		UsuarioId, StatusUsuarioId, CargoUsuarioId, EnderecoUsuarioId, NomeUsuario, Email, Senha, CPF, DataNascimento, 
-		AlteracaoId
+		UsuarioId, StatusUsuarioId, CargoId, NomeUsuario, Email, Senha, CPF, DataNascimento, 
+		TipoAlteracaoId
 	) 
 	SELECT
 		i.UsuarioId,
 		i.StatusUsuarioId,
-		i.CargoUsuarioId,
-		i.EnderecoUsuarioId,
+		i.CargoId,
 		i.Nome,
 		i.Email,
+		i.Senha,
 		i.CPF,
-		i.DataNascimento
+		i.DataNascimento,
+		t.TipoAlteracaoId
 	FROM inserted i
 	CROSS JOIN
 		TipoALteracaoUsuario t
