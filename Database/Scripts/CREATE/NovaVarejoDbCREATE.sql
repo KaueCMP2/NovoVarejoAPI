@@ -34,7 +34,7 @@ GO
 
 CREATE TABLE StatusUsuario 
 (
-	StatusId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+	StatusUsuarioId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	NomeStatus VARCHAR(20) UNIQUE NOT NULL
 );
 GO
@@ -42,7 +42,7 @@ GO
 CREATE TABLE Usuario 
 (
 	UsuarioId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	StatusId UNIQUEIDENTIFIER NOT NULL,
+	StatusUsuarioId UNIQUEIDENTIFIER NOT NULL,
 	CargoId UNIQUEIDENTIFIER NOT NULL,
 	Nome NVARCHAR(50),
 	Email VARCHAR(255) UNIQUE,
@@ -50,14 +50,14 @@ CREATE TABLE Usuario
 	CPF VARCHAR(12) UNIQUE,
 	DataNascimento DATETIME2,
 
-	CONSTRAINT FK_Usuario_SatatusUsuario_StatusId FOREIGN KEY (StatusId) REFERENCES StatusUsuario(StatusId),
+	CONSTRAINT FK_Usuario_SatatusUsuario_StatusUsuarioId FOREIGN KEY (StatusUsuarioId) REFERENCES StatusUsuario(StatusUsuarioId),
 	CONSTRAINT FK_Usuario_CargoUsuario_CargoId FOREIGN KEY (CargoId) REFERENCES CargoUsuario(CargoId)
 );
 GO
 
 CREATE TABLE EnderecoUsuario
 (
-	EnderecoId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+	EnderecoUsuarioId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	UsuarioId UNIQUEIDENTIFIER NOT NULL,
 	Logradouro NVARCHAR(150),
 	EstadoId UNIQUEIDENTIFIER NOT NULL,
@@ -82,9 +82,9 @@ CREATE TABLE LogUsuario
 (
 	LogUsuarioId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	UsuarioId UNIQUEIDENTIFIER NOT NULL,
-	StatusId UNIQUEIDENTIFIER NOT NULL,
+	StatusUsuarioId UNIQUEIDENTIFIER NOT NULL,
 	CargoId UNIQUEIDENTIFIER NOT NULL,
-	EnderecoId UNIQUEIDENTIFIER NOT NULL,
+	EnderecoUsuarioId UNIQUEIDENTIFIER NOT NULL,
 	TipoAlteracaoId UNIQUEIDENTIFIER NOT NULL,
 	NomeUsuario NVARCHAR(50),
 	Email VARCHAR(255) UNIQUE,
@@ -95,12 +95,11 @@ CREATE TABLE LogUsuario
 
 	CONSTRAINT FK_LogUsuario_TipoAlteracaoUsuario_TipoAlteracaoId FOREIGN KEY (TipoAlteracaoId) REFERENCES TipoAlteracaoUsuario(TipoAlteracaoId),
 	CONSTRAINT FK_LogUsuario_Usuario_UsuarioId FOREIGN KEY (UsuarioId) REFERENCES Usuario(UsuarioId),
-	CONSTRAINT FK_LogUsuario_StatusUsuario_StatusId FOREIGN KEY (StatusId) REFERENCES StatusUsuario(StatusId),
+	CONSTRAINT FK_LogUsuario_StatusUsuario_StatusUsuarioId FOREIGN KEY (StatusUsuarioId) REFERENCES StatusUsuario(StatusUsuarioId),
 	CONSTRAINT FK_LogUsuario_CargoUsuario_CargoId FOREIGN KEY (CargoId) REFERENCES CargoUsuario(CargoId),
-	CONSTRAINT FK_LogUsuario_EnderecoUsuario_EnderecoId FOREIGN KEY (EnderecoId) REFERENCES EnderecoUsuario(EnderecoId) 
+	CONSTRAINT FK_LogUsuario_EnderecoUsuario_EnderecoUsuarioId FOREIGN KEY (EnderecoUsuarioId) REFERENCES EnderecoUsuario(EnderecoUsuarioId) 
 );
 GO
-
 
 CREATE TABLE CategoriaProduto 
 (
@@ -200,11 +199,11 @@ CREATE TABLE Pedido
 (
 	PedidoId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	UsuarioId UNIQUEIDENTIFIER NOT NULL,
-	EnderecoId UNIQUEIDENTIFIER NOT NULL,
+	EnderecoUsuarioId UNIQUEIDENTIFIER NOT NULL,
 	StatusPedidoId UNIQUEIDENTIFIER NOT NULL,
 
 	CONSTRAINT FK_Pedido_Usuario_UsuarioId FOREIGN KEY (UsuarioId) REFERENCES Usuario(UsuarioId),
-	CONSTRAINT FK_Pedido_EnderecoUsuario_EnderecoId FOREIGN KEY (EnderecoId) REFERENCES EnderecoUsuario(EnderecoId),
+	CONSTRAINT FK_Pedido_EnderecoUsuario_EnderecoUsuarioId FOREIGN KEY (EnderecousuarioId) REFERENCES EnderecoUsuario(EnderecoUsuarioId),
 	CONSTRAINT FK_Pedido_StatusPedido_StatusPedidoId FOREIGN KEY (StatusPedidoId) REFERENCES StatusPedido(StatusPedidoId),
 );
 GO
@@ -220,13 +219,13 @@ CREATE TABLE LogPedido
 (
 	LogPedidoId UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	UsuarioId UNIQUEIDENTIFIER NOT NULL,
-	EnderecoId UNIQUEIDENTIFIER NOT NULL,
+	EnderecoUsuarioId UNIQUEIDENTIFIER NOT NULL,
 	TipoAlteracaoId UNIQUEIDENTIFIER NOT NULL,
 	StatusPedidoId UNIQUEIDENTIFIER NOT NULL,
 
 	CONSTRAINT FK_LogPedido_TipoAlteracaoPedido_TipoAlteracaoId FOREIGN KEY (TipoAlteracaoId) REFERENCES TipoAlteracaoPedido(TipoAlteracaoId),
 	CONSTRAINT FK_LogPedido_Usuario_UsuarioId FOREIGN KEY (UsuarioId) REFERENCES Usuario(UsuarioId),
-	CONSTRAINT FK_LogPedido_EnderecoUsuario_EnderecoId FOREIGN KEY (EnderecoId) REFERENCES EnderecoUsuario(EnderecoId),
+	CONSTRAINT FK_LogPedido_EnderecoUsuario_EnderecoUsuarioId FOREIGN KEY (EnderecoUsuarioId) REFERENCES EnderecoUsuario(EnderecoUsuarioId),
 	CONSTRAINT FK_LogPedido_StatusPedido_StatusPedidoId FOREIGN KEY (StatusPedidoId) REFERENCES StatusPedido(StatusPedidoId),
 );
 GO
